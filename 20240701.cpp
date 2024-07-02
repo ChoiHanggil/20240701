@@ -9,8 +9,10 @@
 #include <stack>        //std::stack
 #include <queue>        //std::queue, std::priority_queue
 
-#include <set>			//std::set
-#include <map>			//std::map
+#include <set>			//std::set, std::multiset
+#include <map>			//std::map, std::multimap
+
+#include <unordered_set> // std::unordered_set
 
 #include <algorithm>	// std::sort
 
@@ -386,6 +388,17 @@ void SetEx()
 
 	//검색
 	std::cout << (s.find(4) != s.end()) << std::endl;
+
+	std::multiset<int> ms;
+	std::unordered_set<int> us;
+
+	ms.insert(1);
+	ms.insert(2);
+	ms.insert(2);//중복 가능
+
+	us.insert(1);
+	us.insert(2);
+	us.insert(3);
 }
 
 void MapEx()
@@ -516,3 +529,18 @@ int main()
 //중복 가능
 //multiset
 //multimap
+
+// 해시 테이블
+//unordered_set
+//unordered_map
+//unordered_multiset
+//unordered_multimap
+
+//											삽입		삭제		검색
+//set, multiset								O(log N)	O(log N)	O(log N)
+//map, multimap								O(log N)	O(log N)	O(log N)
+
+//unordered_set, unordered_multiset			O(1)		O(1)		O(1)
+//unordered_map, unordered_multimap			O(1)		O(1)		O(1)
+// 
+											//해시 함수 성능이 중요
