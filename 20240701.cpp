@@ -5,6 +5,13 @@
 #include <forward_list> // std::forward
 #include <list>			//std::list
 #include <deque>		// std::deqie
+
+#include <stack>        //std::stack
+#include <queue>        //std::queue, std::priority_queue
+
+#include <set>			//std::set
+#include <map>			//std::map
+
 #include <algorithm>	// std::sort
 
 void ArrayEx()
@@ -260,6 +267,183 @@ void DequeEx()
 	std::cout << std::endl;
 
 }
+
+void StackEx()
+{
+	//선언
+	std::stack<int> s;
+	
+	//삽입
+	s.push(1);
+	s.push(2);
+	s.push(3);
+
+	//삭제
+	s.pop();
+
+	//크기
+	std::cout << s.size() << std::endl;
+	std::cout << "sizeof : " << sizeof(s) << std::endl;
+
+	//가장 위에 있는 원소(LAST)
+	std::cout << s.top() << std::endl;
+
+	//초기화식 X
+	// std::stack<int> s2 {1,2,3,4,5};
+
+	//순회
+	//범위기반 : X
+	//for(auto e : s){}
+	//이터레이터 : X
+	//std::stack<int>::iterator;
+	//인덱스 : X
+	//s[0]
+
+	std::stack<int> temp = s;
+	while (!temp.empty())
+	{
+		std::cout << temp.top() << " ";
+		temp.pop();
+	}
+	std::cout << std::endl;
+}
+
+void QueueEx()
+{
+	std::queue<int> q;
+
+	//삽입
+	q.push(1);
+	q.push(2);
+	q.push(3);
+
+	//삭제
+	q.pop();
+
+	//크기
+	std::cout << q.size() << std::endl;
+	std::cout << "sizeof : " << sizeof(q) << std::endl;
+	//순회
+	while (!q.empty())
+	{
+		std::cout << q.front() << " ";
+		q.pop();
+	}
+	std::cout << std::endl;
+}
+
+void PriorityQueueEx() //Heap 구조
+{
+	std::priority_queue<int> pq; // heap data structre
+
+	//삽입
+	pq.push(5);
+	pq.push(3);
+	pq.push(4);
+	pq.push(2);
+
+	//삭제
+	
+	//크기
+	std::cout << pq.size() << std::endl;
+	std::cout << "sizeof : " << sizeof(pq) << std::endl;
+	
+	//출력
+	std::priority_queue<int> temp = pq;
+	while (!temp.empty())
+	{
+		//왜 top 이지? 쌓아올리는 자료구조 Heap구조 그래서 제일 위에 있는 것 Top사용;
+		std::cout << temp.top()<< " ";
+		temp.pop();
+	}
+	std::cout << std::endl;
+}
+
+void SetEx()
+{
+	//unique한 값 : 중복값X
+	// Binary Search Tree
+	// 정력
+	
+	//선언
+	std::set<int> s{ 5,2,4,3,1 };
+
+	//삽입
+	s.insert(6);
+
+	//삭제
+	s.erase(3);
+
+	//크기
+	std::cout << s.size() << std::endl;
+
+	//순회
+	for (auto e : s)
+	{
+		std::cout << e << " ";
+	}
+	std::cout << std::endl;
+
+	//검색
+	std::cout << (s.find(4) != s.end()) << std::endl;
+}
+
+void MapEx()
+{
+	// (키 - 벨류)
+	std::map<int, std::string> m {
+		{ 1,"one" },
+		{ 2,"two" },
+		{ 3,"three"},
+		{ 4,"four" },
+	};
+
+	//삽입
+	m.insert({ 5, "five" });
+	m[6] = "six";
+
+	//크기
+	std::cout << m.size() << std::endl;
+
+	//값에 접근
+	std::cout << m.at(2) << std::endl;
+	std::cout << m[2] << std::endl;
+
+	//{ key, value }
+	//std::pair<T1,T2>
+	
+	//검색
+	std::map<int, std::string>::iterator result = m.find(1);
+	//auto result = m.find(1);
+	if (result != m.end())
+	{
+		//찾음
+		//*result = std::pair<int, string>
+		//					.first	.second
+		
+		std::cout <<"find :" << (*result).second << std::endl;
+	}
+
+	//순회
+	//모든 원소를 "키 : 밸류" 출력
+	//값수정 X : const &만 가능
+	for (std::pair<const int, std::string>& e : m)
+	{
+		//e - std::pair<int,std::string>
+		std::cout << e.first <<" : " << e.second << std::endl;;
+	}
+
+	std::map <const std::string, int> items
+	{
+		{"sword", 10},
+		{"hammer", 100},
+		{"shield", 50},
+		{"armor", 50}
+	};
+
+	std::cout << items["sword"] << std::endl;
+	items["knife"] = 30; //삽입
+}
 int main()
 {
 	// Sequence Container
@@ -279,6 +463,22 @@ int main()
 	ListEx();
 	std::cout << "------------------------------" << std::endl;
 	DequeEx();
+	std::cout << "------------------------------------" << std::endl;
+
+	//Container Adaptor
+	StackEx();
+	std::cout << "------------------------------------" << std::endl;
+	QueueEx();
+	std::cout << "------------------------------------" << std::endl;
+	PriorityQueueEx();
+	std::cout << "------------------------------------" << std::endl;
+
+	//Associative Container
+	SetEx();
+	std::cout << "------------------------------------" << std::endl;
+	MapEx();
+	std::cout << "------------------------------------" << std::endl;
+
 }
 
 // 임의 접근이 가장 순서
@@ -297,3 +497,22 @@ int main()
 // 중간에서 삽입/삭제
 // O(1)                   O(n)
 // list - forward_list - deque - vector 
+
+
+// 보조 컨테이너 (Container Adaptor)
+//	특정한 목적에 맞도록 변형된 컨테이너
+//						push	 pop		top/front
+// stack				O(1)	 O(1)		O(1)
+// queue				O(1)	 O(1)		O(1)
+// priority_queue		O(logN)  O(logN)    O(1)
+
+//연관 컨테이너 (Associative Container)
+// 
+// 이진 탐색 트리
+// 중복 불가능
+//set
+//map
+
+//중복 가능
+//multiset
+//multimap
